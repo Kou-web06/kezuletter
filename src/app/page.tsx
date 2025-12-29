@@ -30,8 +30,8 @@ export default function CreatePage() {
         anniversaryDate: selectedSkin === 'anniversary' ? anniversaryDate : undefined,
       });
       const encrypted = encrypt(payload);
-      const skinParam = selectedSkin ? `?s=${selectedSkin}` : '';
-      const fullUrl = `${window.location.origin}/open${skinParam}#${encrypted}`;
+      // OGP切り替え用にskinをクエリパラメータとして付与
+      const fullUrl = `${window.location.origin}/open?skin=${selectedSkin}#${encrypted}`;
       setUrl(fullUrl);
       setIsLoading(false);
     }, 8500);
