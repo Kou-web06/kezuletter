@@ -36,17 +36,17 @@ export default function CreatePage() {
     }, 8500);
   };
 
-  const updatePosition = (clientX: number, container: HTMLElement) => {
+  const updatePosition = useCallback((clientX: number, container: HTMLElement) => {
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setScratchReveal(percentage);
-  };
+  }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     updatePosition(e.clientX, e.currentTarget.parentElement!);
-  }, []);
+  }, [updatePosition]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging((prev) => {
@@ -54,7 +54,7 @@ export default function CreatePage() {
       updatePosition(e.clientX, e.currentTarget);
       return true;
     });
-  }, []);
+  }, [updatePosition]);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
@@ -63,7 +63,7 @@ export default function CreatePage() {
   const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(true);
     updatePosition(e.touches[0].clientX, e.currentTarget.parentElement!);
-  }, []);
+  }, [updatePosition]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging((prev) => {
@@ -71,7 +71,7 @@ export default function CreatePage() {
       updatePosition(e.touches[0].clientX, e.currentTarget);
       return true;
     });
-  }, []);
+  }, [updatePosition]);
 
   const handleSelectSkin = useCallback((key: SkinKey) => {
     setSelectedSkin(key);
