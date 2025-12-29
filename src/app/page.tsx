@@ -125,112 +125,114 @@ export default function CreatePage() {
       >
         <img src="/icons/logo.png" alt="KezuLetter Logo" className="max-w-[124px]" />
       </div>
-      {/* 完成イメージプレビュー */}
-      <div className="w-full max-w-[350px]">
-        <p className="text-xs text-purple-200 font-bold mb-2">カードの完成イメージ</p>
-        <div 
-          className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] bg-white cursor-ew-resize mb-8"
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleMouseUp}
-        >
-          {/* 背面: 完成メッセージ */}
+      <div className="w-full max-w-6xl flex flex-col md:flex-row md:items-start md:justify-center gap-8">
+        {/* 完成イメージプレビュー */}
+        <div className="w-full md:w-3/5 max-w-[480px]">
+          <p className="text-xs text-purple-200 font-bold mb-2">カードの完成イメージ</p>
           <div 
-            className="absolute inset-0 flex flex-col items-center justify-center p-6 text-slate-800"
-            style={{
-              backgroundImage: `url(${SKINS[selectedSkin].revealedImg})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
+            className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] bg-white cursor-ew-resize mb-8"
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleMouseUp}
           >
-            <p className="text-[13px] font-bold text-center break-words w-full p-4 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+            {/* 背面: 完成メッセージ */}
+            <div 
+              className="absolute inset-0 flex flex-col items-center justify-center p-6 text-slate-800"
               style={{
-                fontFamily: currentFontFamily,
-                color: SKINS[selectedSkin].textColor,
+                backgroundImage: `url(${SKINS[selectedSkin].revealedImg})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             >
-              {text ? text : 'ここにメッセージが表示されます'}
-            </p>
-            {selectedSkin === 'anniversary' && anniversaryDate && (
-              <p
-                className="absolute right-1 top-2 rotate-3 text-[11px] font-bold text-center break-words w-full p-2 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+              <p className="text-[13px] font-bold text-center break-words w-full p-4 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
                 style={{
                   fontFamily: currentFontFamily,
                   color: SKINS[selectedSkin].textColor,
                 }}
               >
-                {anniversaryDate}
+                {text ? text : 'ここにメッセージが表示されます'}
               </p>
-            )}
-            {senderName && (
-              <p
-                className="text-[10px] font-bold text-center break-words w-full p-4 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
-                style={{
-                  fontFamily: currentFontFamily,
-                  color: SKINS[selectedSkin].textColor,
-                }}
-              >
-                by {senderName}
-              </p>
-            )}
-          </div>
+              {selectedSkin === 'anniversary' && anniversaryDate && (
+                <p
+                  className="absolute right-1 top-2 rotate-3 text-[11px] font-bold text-center break-words w-full p-2 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+                  style={{
+                    fontFamily: currentFontFamily,
+                    color: SKINS[selectedSkin].textColor,
+                  }}
+                >
+                  {anniversaryDate}
+                </p>
+              )}
+              {senderName && (
+                <p
+                  className="text-[10px] font-bold text-center break-words w-full p-4 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+                  style={{
+                    fontFamily: currentFontFamily,
+                    color: SKINS[selectedSkin].textColor,
+                  }}
+                >
+                  by {senderName}
+                </p>
+              )}
+            </div>
 
-          {/* 前面: スクラッチ層（スライダーで可動） */}
-          <div
-            className="absolute inset-0 z-10 pointer-events-none"
-            style={{
-              clipPath: `inset(0 0 0 ${scratchReveal}%)`,
-            }}
-          >
-            <div 
-              className="w-full h-full"
+            {/* 前面: スクラッチ層（スライダーで可動） */}
+            <div
+              className="absolute inset-0 z-10 pointer-events-none"
               style={{
-                backgroundImage: `url(${SKINS[selectedSkin].scratchImg})`,
-                backgroundRepeat: 'repeat',
-                backgroundSize: 'contain',
+                clipPath: `inset(0 0 0 ${scratchReveal}%)`,
               }}
-            />
-            {selectedSkin === 'anniversary' && anniversaryDate && (
-              <p
-                className="absolute right-1 top-2 rotate-3 text-[11px] font-bold text-center break-words w-full p-2 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+            >
+              <div 
+                className="w-full h-full"
                 style={{
-                  fontFamily: currentFontFamily,
-                  color: SKINS[selectedSkin].textColor,
+                  backgroundImage: `url(${SKINS[selectedSkin].scratchImg})`,
+                  backgroundRepeat: 'repeat',
+                  backgroundSize: 'contain',
                 }}
-              >
-                {anniversaryDate}
-              </p>
-            )}
-          </div>
+              />
+              {selectedSkin === 'anniversary' && anniversaryDate && (
+                <p
+                  className="absolute right-1 top-2 rotate-3 text-[11px] font-bold text-center break-words w-full p-2 text-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+                  style={{
+                    fontFamily: currentFontFamily,
+                    color: SKINS[selectedSkin].textColor,
+                  }}
+                >
+                  {anniversaryDate}
+                </p>
+              )}
+            </div>
 
-          {/* 境界線（ドラッグ可能） */}
-          <div
-            className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-20 cursor-ew-resize pointer-events-auto"
-            style={{ left: `${scratchReveal}%`, transform: 'translateX(-50%)' }}
-            onMouseDown={handleMouseDown}
-            onTouchStart={handleTouchStart}
-          >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center">
-              <div className="text-white text-xs">
-                <img src="/icons/finger.png" className="w-4 h-4" />
+            {/* 境界線（ドラッグ可能） */}
+            <div
+              className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-20 cursor-ew-resize pointer-events-auto"
+              style={{ left: `${scratchReveal}%`, transform: 'translateX(-50%)' }}
+              onMouseDown={handleMouseDown}
+              onTouchStart={handleTouchStart}
+            >
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center">
+                <div className="text-white text-xs">
+                  <img src="/icons/finger.png" className="w-4 h-4" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col items-center gap-6 p-2 rounded-4xl"
-        style={{
-          background: 'linear-gradient(45deg, rgba(217, 251, 255, 0.3), rgba(255, 200, 244, 0.3) 100%)',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}
-      >
+
+        <div className="flex flex-col items-center gap-6 p-2 rounded-4xl w-full md:w-2/5"
+          style={{
+            background: 'linear-gradient(45deg, rgba(217, 251, 255, 0.3), rgba(255, 200, 244, 0.3) 100%)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        >
       <div className="relative">
         <textarea 
-          className="bg-white p-8 rounded-3xl w-83 h-40 min-h-32 text-[12px] text-black shadow-[0_20px_50px_rgba(0,0,0,0.05)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-400"
+          className="bg-white p-8 rounded-3xl w-83 md:w-110 h-40 md:h-35 min-h-32 text-[12px] text-black shadow-[0_20px_50px_rgba(0,0,0,0.05)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-400"
           placeholder="隠したいメッセージを入力..."
           onChange={(e) => setText(e.target.value)}
           maxLength={80}
@@ -302,8 +304,8 @@ export default function CreatePage() {
           </div>  
         </div>
         {selectedSkin === 'anniversary' && (
-          <div className="relative w-83 -mt-2">
-            <label className="text-[11px] font-bold text-[#606060] mb-1 inline-block">
+          <div className="relative w-83 -mt-2 md:w-110">
+            <label className="text-[11px] font-bold text-[#606060] ml-2 mb-1 inline-block">
               記念日の日付
             </label>
             <input
@@ -314,7 +316,7 @@ export default function CreatePage() {
             />
           </div>
         )}
-        <div className="relative w-83">
+        <div className="relative w-83 md:w-110">
           <input 
             type="text"
             className="bg-white p-4 rounded-3xl text-xs w-full h-12 text-black shadow-[0_20px_50px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-400"
@@ -326,10 +328,11 @@ export default function CreatePage() {
         </div>
         <button 
           onClick={generateUrl}
-          className="bg-[#606060] w-83 h-12 text-white px-8 py-2 rounded-3xl font-bold hover:opacity-90 transition cursor-pointer"
+          className="bg-[#606060] w-83 md:w-110 h-12  text-white px-8 py-2 rounded-3xl font-bold hover:opacity-90 transition cursor-pointer"
         >
           レターURLを発行する
         </button>
+        </div>
       </div>
 
       {isLoading && (

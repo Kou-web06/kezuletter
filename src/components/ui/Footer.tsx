@@ -16,13 +16,14 @@ export function Footer() {
           >
             利用規約・プライバシーポリシー
           </button>
+          <p className="ml-4 text-gray-400 text-[12px] font-semibold">&copy; 2025 KezuLetter</p>
         </div>
       </footer>
 
       {/* モーダル */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-[500px] w-full max-h-[80vh] overflow-y-auto p-6 shadow-lg">
+        <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 p-6 resize-none">
+          <div className="bg-white rounded-3xl max-w-[500px] w-full max-h-[80vh] overflow-y-auto p-6 shadow-lg">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-800">利用規約・プライバシーポリシー</h2>
               <button
@@ -62,20 +63,28 @@ export function Footer() {
                 <h3 className="font-bold text-gray-800 mb-3 text-base">プライバシーポリシー</h3>
                 <div className="space-y-3">
                   <div>
-                    <h4 className="font-semibold mb-2">1. 情報の収集</h4>
-                    <p>本サービスは、メッセージ送信時に送信者名とメッセージ内容を収集します。これらの情報は暗号化されて処理されます。</p>
+                    <h4 className="font-semibold mb-2">1. エンドツーエンド暗号化</h4>
+                    <p>本サービスは、メッセージ内容とメタデータを含むすべての情報をブラウザ上で暗号化して処理します。暗号化されたデータは URL に含まれ、サーバーに送信されません。</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">2. 情報の使用</h4>
-                    <p>収集した情報は、本サービスの提供と改善のためにのみ使用されます。第三者と共有することはありません。</p>
+                    <h4 className="font-semibold mb-2">2. 情報の非保有</h4>
+                    <p>本サービスの実装により、メッセージの内容はサーバーに到達しません。したがって、当事者を含むいかなる者も暗号化されたコンテンツの内容を知ることはできません。送信者名はメッセージと共に暗号化されます。</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">3. Cookie および追跡技術</h4>
+                    <h4 className="font-semibold mb-2">3. ユーザーの情報管理</h4>
+                    <p>本サービスの復号化に必要な情報はユーザーのブラウザのみが保有します。共有されたURLにアクセスしたユーザーのみがメッセージを復号化して読むことが可能です。</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">4. 第三者との共有</h4>
+                    <p>本サービスはユーザー情報を収集しないため、第三者と共有することはありません。</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">5. Cookie および追跡技術</h4>
                     <p>本サービスは、ユーザーエクスペリエンスの向上のためにCookieを使用する場合があります。</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">4. セキュリティ</h4>
-                    <p>ユーザー情報を保護するため、適切なセキュリティ対策を講じています。ただし、完全なセキュリティを保証することはできません。</p>
+                    <h4 className="font-semibold mb-2">6. セキュリティ</h4>
+                    <p>エンドツーエンド暗号化により、メッセージ内容のプライバシーは保護されます。ただし、URLの安全な共有はユーザーの責任です。</p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">5. プライバシーポリシーの変更</h4>
@@ -87,7 +96,7 @@ export function Footer() {
               {/* お問い合わせ */}
               <div>
                 <h3 className="font-bold text-gray-800 mb-3 text-base">お問い合わせ</h3>
-                <p>本サービスに関するご質問やご不明な点がございましたら、GitHubの issue までお気軽にお問い合わせください。</p>
+                <p>本サービスに関するご質問やご不明な点がございましたら、<a href="https://github.com/Kou-web06/kezuletter/issues" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GitHubの issue</a> までお気軽にお問い合わせください。</p>
               </div>
             </div>
 
