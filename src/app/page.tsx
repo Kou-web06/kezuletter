@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Fredericka_the_Great } from 'next/font/google';
 import { SKINS, SkinKey } from '@/lib/skins';
 import { useCrypto } from '@/hooks/useCrypto';
@@ -36,49 +36,44 @@ export default function CreatePage() {
     }, 8500);
   };
 
-  const updatePosition = useCallback((clientX: number, container: HTMLElement) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    updatePosition(e.clientX, e.currentTarget.parentElement!);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    updatePosition(e.clientX, e.currentTarget);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    updatePosition(e.touches[0].clientX, e.currentTarget.parentElement!);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    updatePosition(e.touches[0].clientX, e.currentTarget);
+  };
+
+  const updatePosition = (clientX: number, container: HTMLElement) => {
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setScratchReveal(percentage);
-  }, []);
+  };
 
-  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    updatePosition(e.clientX, e.currentTarget.parentElement!);
-  }, [updatePosition]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging((prev) => {
-      if (!prev) return false;
-      updatePosition(e.clientX, e.currentTarget);
-      return true;
-    });
-  }, [updatePosition]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    updatePosition(e.touches[0].clientX, e.currentTarget.parentElement!);
-  }, [updatePosition]);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    setIsDragging((prev) => {
-      if (!prev) return false;
-      updatePosition(e.touches[0].clientX, e.currentTarget);
-      return true;
-    });
-  }, [updatePosition]);
-
-  const handleSelectSkin = useCallback((key: SkinKey) => {
+  const handleSelectSkin = (key: SkinKey) => {
     setSelectedSkin(key);
+    // スイッチ切替時に「削る前の状態」をリセット
     setScratchReveal(0);
-  }, []);
+  };
 
-  const handleCopy = useCallback(async () => {
+  const handleCopy = async () => {
     if (!url) return;
     try {
       if (navigator?.clipboard?.writeText) {
@@ -96,7 +91,7 @@ export default function CreatePage() {
     } catch (error) {
       console.error('Failed to copy URL', error);
     }
-  }, [url]);
+  };
 
   const currentFontFamily = selectedSkin === 'anniversary' ? fredericka.style.fontFamily : SKINS[selectedSkin].font;
 
@@ -299,8 +294,8 @@ export default function CreatePage() {
         </div>
         {selectedSkin === 'anniversary' && (
           <div className="relative w-83 -mt-2">
-            <label className="max-w-83 text-[8px] font-bold text-[#606060] mb-1 ml-3 inline-block">
-              記念日はいつ？
+            <label className="text-[11px] font-bold text-[#606060] mb-1 inline-block">
+              記念日の日付
             </label>
             <input
               type="date"
@@ -345,7 +340,7 @@ export default function CreatePage() {
       {url && !isLoading && (
         <div className="mt-3 p-4 bg-[#fff] rounded-3xl w-85 max-w-md border-4 border-solid border-[#F3F3F3] flex flex-col gap-3">
           <div className="flex flex-row items-center justify-around gap-2">
-            <p className="text-[15px] text-[#606060] text-center font-bold">このURLを友達に送ろう！</p>
+            <p className="text-[#606060] text-center font-bold">このURLを友達に送ろう！</p>
             <div className="flex items-center gap-3">
               {copied ? ( 
                 <span className="flex justify-center items-center h-10 text-xs text-green-600 font-semibold">Copied !</span>
