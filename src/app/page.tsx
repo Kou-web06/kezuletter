@@ -30,7 +30,8 @@ export default function CreatePage() {
         anniversaryDate: selectedSkin === 'anniversary' ? anniversaryDate : undefined,
       });
       const encrypted = encrypt(payload);
-      const fullUrl = `${window.location.origin}/open#${encrypted}`;
+      const skinParam = selectedSkin ? `?s=${selectedSkin}` : '';
+      const fullUrl = `${window.location.origin}/open${skinParam}#${encrypted}`;
       setUrl(fullUrl);
       setIsLoading(false);
     }, 8500);
