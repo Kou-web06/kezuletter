@@ -1,14 +1,15 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { Fredericka_the_Great } from 'next/font/google';
-import html2canvas from 'html2canvas';
+import dynamic from 'next/dynamic';
 import { useCrypto } from '@/hooks/useCrypto';
 import { ScratchCanvas } from '@/components/canvas/ScratchCanvas';
-import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
 import { useAudio } from '@/hooks/useAudio';
 import { SKINS, SkinKey } from '@/lib/skins';
+
+const Confetti = dynamic(() => import('react-confetti'), { ssr: false });
 
 const fredericka = Fredericka_the_Great({ weight: '400', subsets: ['latin'], display: 'swap' });
 
@@ -32,25 +33,23 @@ export default function OpenPage() {
   const [fallingReactions, setFallingReactions] = useState<Array<{ id: number; reaction: string; left: number; delay: number }>>([]);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
-  const handleReactionClick = (reaction: string) => {
+  const handleReactionClick = useCallback((reaction: string) => {
     setSelectedReaction(reaction);
-    setReactionKey(prev => prev + 1); // アニメーションを再トリガー
+    setReactionKey(prev => prev + 1);
     
-    // 降ってくるリアクション画像を生成
     const newReactions = Array.from({ length: 50 }, (_, i) => ({
       id: Date.now() + i,
       reaction,
-      left: Math.random() * 100, // 0-100%のランダムな位置
-      delay: Math.random() * 0.5, // 0-0.5秒のランダムな遅延
+      left: Math.random() * 100,
+      delay: Math.random() * 0.5,
     }));
     
     setFallingReactions(prev => [...prev, ...newReactions]);
     
-    // 2秒後に削除
     setTimeout(() => {
       setFallingReactions(prev => prev.filter(r => !newReactions.some(nr => nr.id === r.id)));
     }, 2000);
-  };
+  }, []);
 
   useEffect(() => {
     // URLのハッシュ (#以降) を取得
@@ -97,14 +96,14 @@ export default function OpenPage() {
     playSuccess();
   };
 
-  const handleShareClick = async () => {
+  const handleShareClick = useCallback(async () => {
     if (!isRevealed || !cardRef.current) {
-      // スクラッチ前は共有を許可しない
       return;
     }
     try {
       setShareGenerating(true);
-      const canvas = await html2canvas(cardRef.current, {
+      const { default: html2canvasModule } = await import('html2canvas');
+      const canvas = await html2canvasModule(cardRef.current, {
         scale: 2,
         useCORS: true,
         backgroundColor: null,
@@ -117,10 +116,9 @@ export default function OpenPage() {
     } finally {
       setShareGenerating(false);
     }
-  };
+  }, [isRevealed]);
 
-  const handlePostToX = () => {
-    // スキンに応じたシェアテキストを生成
+  const handlePostToX = useCallback(() => {
     let shareText = '';
     const senderName = sender || '匿名';
     
@@ -136,7 +134,7 @@ export default function OpenPage() {
     intent.searchParams.set('text', shareText);
     intent.searchParams.set('url', window.location.href);
     window.open(intent.toString(), '_blank', 'noopener,noreferrer');
-  };
+  }, [sender, selectedSkin]);
 
   const currentFontFamily = selectedSkin === 'anniversary' ? fredericka.style.fontFamily : SKINS[selectedSkin].font;
 

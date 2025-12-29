@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Fredericka_the_Great } from 'next/font/google';
 import { SKINS, SkinKey } from '@/lib/skins';
 import { useCrypto } from '@/hooks/useCrypto';
@@ -36,30 +36,6 @@ export default function CreatePage() {
     }, 8500);
   };
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    updatePosition(e.clientX, e.currentTarget.parentElement!);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    updatePosition(e.clientX, e.currentTarget);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    updatePosition(e.touches[0].clientX, e.currentTarget.parentElement!);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    updatePosition(e.touches[0].clientX, e.currentTarget);
-  };
-
   const updatePosition = (clientX: number, container: HTMLElement) => {
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
@@ -67,13 +43,42 @@ export default function CreatePage() {
     setScratchReveal(percentage);
   };
 
-  const handleSelectSkin = (key: SkinKey) => {
-    setSelectedSkin(key);
-    // スイッチ切替時に「削る前の状態」をリセット
-    setScratchReveal(0);
-  };
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    updatePosition(e.clientX, e.currentTarget.parentElement!);
+  }, []);
 
-  const handleCopy = async () => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging((prev) => {
+      if (!prev) return false;
+      updatePosition(e.clientX, e.currentTarget);
+      return true;
+    });
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    updatePosition(e.touches[0].clientX, e.currentTarget.parentElement!);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging((prev) => {
+      if (!prev) return false;
+      updatePosition(e.touches[0].clientX, e.currentTarget);
+      return true;
+    });
+  }, []);
+
+  const handleSelectSkin = useCallback((key: SkinKey) => {
+    setSelectedSkin(key);
+    setScratchReveal(0);
+  }, []);
+
+  const handleCopy = useCallback(async () => {
     if (!url) return;
     try {
       if (navigator?.clipboard?.writeText) {
@@ -91,7 +96,7 @@ export default function CreatePage() {
     } catch (error) {
       console.error('Failed to copy URL', error);
     }
-  };
+  }, [url]);
 
   const currentFontFamily = selectedSkin === 'anniversary' ? fredericka.style.fontFamily : SKINS[selectedSkin].font;
 
