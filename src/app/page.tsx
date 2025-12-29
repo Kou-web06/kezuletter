@@ -37,8 +37,12 @@ export default function CreatePage() {
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsDragging(true);
-    updatePosition(e.clientX, e.currentTarget.parentElement!);
+    const container = e.currentTarget.parentElement;
+    if (container) {
+      updatePosition(e.clientX, container);
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -51,8 +55,12 @@ export default function CreatePage() {
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsDragging(true);
-    updatePosition(e.touches[0].clientX, e.currentTarget.parentElement!);
+    const container = e.currentTarget.parentElement;
+    if (container) {
+      updatePosition(e.touches[0].clientX, container);
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -60,7 +68,8 @@ export default function CreatePage() {
     updatePosition(e.touches[0].clientX, e.currentTarget);
   };
 
-  const updatePosition = (clientX: number, container: HTMLElement) => {
+  const updatePosition = (clientX: number, container: HTMLElement | null) => {
+    if (!container) return;
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
