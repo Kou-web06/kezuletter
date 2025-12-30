@@ -223,7 +223,7 @@ export default function CreatePage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 px-3 md:px-8 py-3 rounded-4xl w-full md:w-2/5"
+        <div className="flex flex-col items-center gap-4 px-3 md:px-3 py-3 rounded-4xl w-full md:w-2/5"
           style={{
             background: 'linear-gradient(45deg, rgba(217, 251, 255, 0.3), rgba(255, 200, 244, 0.3) 100%)',
             backgroundRepeat: 'no-repeat',
