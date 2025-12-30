@@ -102,7 +102,7 @@ export function Footer() {
 
             <button
               onClick={() => setIsModalOpen(false)}
-              className="mt-6 w-full bg-gray-600 text-white py-2 rounded-lg font-semibold hover:bg-gray-700 transition"
+              className="mt-6 w-full bg-gray-600 text-white py-2 rounded-lg font-semibold hover:bg-gray-700 transition cursor-pointer"
             >
               閉じる
             </button>
