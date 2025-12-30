@@ -223,26 +223,26 @@ export default function CreatePage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-6 p-2 rounded-4xl w-full md:w-2/5"
+        <div className="flex flex-col items-center gap-4 px-3 md:px-8 py-3 rounded-4xl w-full md:w-2/5"
           style={{
             background: 'linear-gradient(45deg, rgba(217, 251, 255, 0.3), rgba(255, 200, 244, 0.3) 100%)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
           }}
         >
-      <div className="relative">
-        <textarea 
-          className="bg-white p-8 rounded-3xl w-83 md:w-110 h-40 md:h-35 min-h-32 text-[12px] text-black shadow-[0_20px_50px_rgba(0,0,0,0.05)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-400"
-          placeholder="隠したいメッセージを入力..."
-          onChange={(e) => setText(e.target.value)}
-          maxLength={80}
-        />
-        <p className={`absolute bottom-4 right-4 text-[8px] font-semibold ${text.length > 80 ? 'text-red-400' : 'text-gray-400'}`}>
-          {text.length} /80文字
-        </p>
-      </div>
-      <p className="text-center font-bold text-[#606060] text-[12px] mb-2">デザインを選ぶ</p>
-        <div className="flex flex-row items-center justify-around w-83 h-15">
+        <div className="relative w-full">
+          <textarea 
+            className="bg-white p-6 rounded-3xl w-full h-40 md:h-35 sm:h-32 text-[12px] text-black shadow-[0_20px_50px_rgba(0,0,0,0.05)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-400"
+            placeholder="隠したいメッセージを入力..."
+            onChange={(e) => setText(e.target.value)}
+            maxLength={80}
+          />
+          <p className={`absolute bottom-4 right-4 text-[8px] font-semibold ${text.length > 80 ? 'text-red-400' : 'text-gray-400'}`}>
+            {text.length} /80文字
+          </p>
+        </div>
+        <p className="text-center font-bold text-[#606060] text-[12px] mb-2">デザインを選ぶ</p>
+        <div className="flex flex-row items-center justify-around w-full h-15">
           <div className="flex flex-col mb-2">
             <div 
               className={`rounded-3xl w-12 h-12 bg-[#EDEDED] border-3 border-solid cursor-pointer hover:opacity-60 transition flex items-center justify-center mb-2 ${
@@ -304,7 +304,7 @@ export default function CreatePage() {
           </div>  
         </div>
         {selectedSkin === 'anniversary' && (
-          <div className="relative w-83 -mt-2 md:w-110">
+          <div className="relative w-full -mt-2">
             <label className="text-[11px] font-bold text-[#606060] ml-2 mb-1 inline-block">
               記念日の日付
             </label>
@@ -316,7 +316,7 @@ export default function CreatePage() {
             />
           </div>
         )}
-        <div className="relative w-83 md:w-110">
+        <div className="relative w-full">
           <input 
             type="text"
             className="bg-white p-4 rounded-3xl text-xs w-full h-12 text-black shadow-[0_20px_50px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-400"
@@ -328,7 +328,7 @@ export default function CreatePage() {
         </div>
         <button 
           onClick={generateUrl}
-          className="bg-[#606060] w-83 md:w-110 h-12  text-white px-8 py-2 rounded-3xl font-bold hover:opacity-90 transition cursor-pointer"
+          className="bg-[#606060] w-full h-12 text-white px-8 py-2 rounded-3xl font-bold hover:opacity-90 transition cursor-pointer"
         >
           レターURLを発行する
         </button>
