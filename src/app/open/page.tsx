@@ -140,6 +140,20 @@ export default function OpenPage() {
 
   const currentFontFamily = selectedSkin === 'anniversary' ? fredericka.style.fontFamily : SKINS[selectedSkin].font;
 
+  const mainBackgroundStyle = selectedSkin === 'newYear'
+    ? {
+        backgroundImage: 'url(/images/newYear.bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }
+    : {
+        backgroundColor: '#F8FAFC',
+        backgroundImage:
+          'radial-gradient(circle at 1px 1px, rgba(210, 214, 219, 0.25) 2px, transparent 0)',
+        backgroundSize: '20px 20px',
+      };
+
   if (!message) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -151,12 +165,7 @@ export default function OpenPage() {
   return (
     <main
       className="flex flex-col items-center p-8 gap-6 min-h-screen"
-      style={{
-        backgroundColor: '#F8FAFC',
-        backgroundImage:
-          'radial-gradient(circle at 1px 1px, rgba(210, 214, 219, 0.25) 2px, transparent 0)',
-        backgroundSize: '20px 20px',
-      }}
+      style={mainBackgroundStyle}
     >
       {/* 削りきった時の紙吹雪演出 */}
       {isRevealed && <Confetti width={width} height={height} recycle={false} numberOfPieces={220} />}
@@ -309,12 +318,13 @@ export default function OpenPage() {
 
       {/* アクションエリア */}
       {isRevealed ? (
-        <div className="flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <div className="flex flex-col items-center gap-4">
           <div className="text-center w-88 h-56 text-[#606060] text-sm font-bold mb-4 rounded-3xl flex flex-col items-center"
             style={{
               background: 'linear-gradient(135deg, rgba(217, 251, 255, 0.5), rgba(255, 200, 244, 0.5) 100%)',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
+              animation: 'slideUp 0.5s',
             }}
           >
             <p className="mt-5 mb-2">今の気持ちは？</p>
@@ -390,7 +400,11 @@ export default function OpenPage() {
               {shareGenerating ? '画像生成中...' : 'サプライズをシェアする'}
             </button>
           </div>
-          <div className="flex flex-col items-center gap-0">
+          <div className="flex flex-col items-center gap-0"
+            style={{
+              animation: 'slideUp 1.0s',
+            }}
+          >
             <img className="w-20 self-end" src="/images/coffee.png" alt="drink coffee"/>
             <a href="https://buymeacoffee.com/kouwebapp" target="_blank" rel="noopener noreferrer" className="w-87 bg-[#606060] hover:bg-[#505050] text-white text-sm py-3 rounded-full font-extrabold border-5 border-solid border-[#E6E6E6] hover:border-[#B0B0B0] transition-all duration-200 cursor-pointer flex items-center justify-center">
               開発者にコーヒーを奢る
